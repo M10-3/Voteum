@@ -1,0 +1,12 @@
+[package]
+name = "VotingNFT"
+version = "1.0.0"
+authors = ["Gnine Diarra"]
+
+[addresses]
+VotingNFT = "0x62a4d83a8af7e21c07ba0c10f74c647f322d820bc501a1672ae79d75694f135b"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"

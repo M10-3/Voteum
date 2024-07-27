@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Inscription</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script>
+        // Récupérer la valeur de userType de l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var userType = urlParams.get('userType');
+
+        // Sélectionner le champ de formulaire hidden avec l'ID "userType"
+        var userTypeField = document.getElementById('userType');
+
+        // Assurez-vous que userTypeField existe et que la valeur de userType est définie
+        if (userTypeField && userType) {
+            // Assigner la valeur de userType au champ de formulaire hidden
+            userTypeField.value = userType;
+        }
+
+        // Fonction pour afficher la section suivante
+        function showSection(section) {
+            document.querySelectorAll('.form-section').forEach(function(sec) {
+                sec.style.display = 'none';
+            });
+            document.getElementById(section).style.display = 'block';
+        }
+
+        // Fonction pour gérer le passage entre les sections
+        function handleNavigation(event) {
+            event.preventDefault();
+            const currentSection = event.target.getAttribute('data-current');
+            const nextSection = event.target.getAttribute('data-next');
+            if (nextSection) {
+                showSection(nextSection);
+            }
+        }
+
+        window.onload = function() {
+            showSection('section1'); // Affiche la première section par défaut
+            document.querySelectorAll('.nav-button').forEach(function(button) {
+                button.addEventListener('click', handleNavigation);
+            });
+        };
+    </script>
+    <script>
+        function redirectForm() {
+            window.location.href = "login.php?userType=candidat";
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/5.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-wrapper {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-section {
+            display: none; /* Masque les sections par défaut */
+        }
+
+        .form-section.active {
+            display: block; /* Affiche la section active */
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .nav-buttons button {
+            flex: 1;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div> <!-- Image de fond floutée -->
+    <div class="container">
+        <div class="form-wrapper">
+            <h1>Inscription</h1>
+            <form id="registrationForm" action="http://localhost/gestion_vote/Front/controller/AddUsers.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="userType" id="userType" value="" />
+                <!-- Section 1 -->
+                <div id="section1" class="form-section">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" name="username" placeholder="Ex : Misiu" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="full_name">Nom complet</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="Ex : Arnold Diaz" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Ex : arnolddiaz1@gmail.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date de naissance</label>
+                        <input type="date" id="dob" name="dob" placeholder="Ex : 20/12/1998" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" placeholder="Ex : 123 Rue de l'École, 75001 Paris, France" required />
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" data-current="section1" data-next="section2" class="nav-button">Suivant</button>
+                    </div>
+                </div>
+                
+                <!-- Section 2 -->
+                <div id="section2" class="form-section">
+                    <div class="form-group">
+                        <label for="biography">Biography</label>
+                        <input type="text" id="biography" name="biography" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="program">Programme</label>
+                        <input type="text" id="program" name="program" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="political_party">Parti politique</label>
+                        <input type="text" id="political_party" name="political_party" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" id="image" accept="image/*" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required />
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" data-current="section2" data-next="section1" class="nav-button">Précédent</button>
+                        <button type="submit" value="S'inscrire" id="submitButton">S'inscrire</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Attendez que le DOM soit chargé
+    document.addEventListener("DOMContentLoaded", function () {
+        // Récupérer la valeur de userType de l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var userType = urlParams.get('userType');
+
+        // Sélectionner le champ de formulaire hidden avec l'ID "userType"
+        var userTypeField = document.getElementById('userType');
+
+        // Sélectionner le span pour afficher le type d'utilisateur
+        var userTypeValueSpan = document.getElementById('userTypeValue');
+
+        // Assurez-vous que userTypeField existe et que la valeur de userType est définie
+        if (userTypeField && userType) {
+            // Assigner la valeur de userType au champ de formulaire hidden
+            userTypeField.value = userType;
+            // Assigner la valeur de userType au span pour afficher le type d'utilisateur
+            userTypeValueSpan.textContent = userType;
+        }
+    });
+</script>
+</html>
